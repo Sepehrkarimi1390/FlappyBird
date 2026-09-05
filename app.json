@@ -7,6 +7,8 @@
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
 
+    "icon": "./assets/logo.png",
+
     "ios": {
       "supportsTablet": true
     },

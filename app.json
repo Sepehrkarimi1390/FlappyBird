@@ -4,13 +4,22 @@
     "slug": "FlappyBird",
     "version": "1.0.0",
     "orientation": "portrait",
+    "icon": "./assets/logo.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
 
-    "icon": "./assets/logo.png",
+    "plugins": [
+      [
+        "expo-location",
+        {
+          "isAndroidBackgroundLocationEnabled": true,
+          "isAndroidForegroundServiceEnabled": true
+        }
+      ]
+    ],
 
-    "ios": {
-      "supportsTablet": true
+    "splash": {
+      "backgroundColor": "#70c5ce"
     },
 
     "android": {

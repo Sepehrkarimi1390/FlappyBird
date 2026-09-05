@@ -5,6 +5,9 @@ on:
     branches: [main]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -21,9 +24,21 @@ jobs:
 
       - run: npx expo prebuild --platform android --no-install
 
-      - run: cd android && chmod +x gradlew && ./gradlew assembleRelease --no-daemon
+      - name: Build APK
+        run: |
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleRelease --no-daemon
 
-      - uses: actions/upload-artifact@v4
+      - name: Upload APK to Release
+        uses: softprops/action-gh-release@v2
         with:
-          name: FlappyBird-apk
-          path: android/app/build/outputs/apk/release/app-release.apk
+          tag_name: build-${{ github.run_number }}
+          name: FlappyBird APK ${{ github.run_number }}
+          body: |
+            FlappyBird Android APK
+
+            Commit: ${{ github.sha }}
+          files: android/app/build/outputs/apk/release/app-release.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
